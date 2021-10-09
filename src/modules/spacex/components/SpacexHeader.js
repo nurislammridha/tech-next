@@ -2,11 +2,15 @@ import React from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux";
+import { GetInputvalue, StatusOptions } from "../_redux/action/SpacexAction";
 const SpacexHeader = () => {
-  const options = [
-    { value: "Success", label: "Success" },
-    { value: "Fail", label: "Fail" },
-  ];
+  const dispatch = useDispatch();
+  const searchValue = useSelector((state) => state.spaceInfo.searchValue);
+
+  const handleChangeInput = (name, value) => {
+    dispatch(GetInputvalue(name, value));
+  };
   return (
     <>
       <div className="alert alert-secondary">
@@ -17,19 +21,36 @@ const SpacexHeader = () => {
         <div className="col-sm-2">
           {/* <input className="form-control" type="date" /> */}
           <DatePicker
-            selected={new Date()}
+            selected={searchValue.date}
             className="form-control"
-            //   onSelect={handleDateSelect} //when day is clicked
-            //   onChange={handleDateChange} //only when value has changed
+            onChange={(e) => {
+              handleChangeInput("search", "");
+              handleChangeInput("date", e);
+            }}
           />
         </div>
         <div className="col-sm-2">Filter by status</div>
         <div className="col-sm-2">
-          <Select options={options} />
+          <Select
+            options={StatusOptions()}
+            value={{ label: searchValue.strStatus }}
+            onChange={(e) => {
+              handleChangeInput("bolStatus", e.value);
+              handleChangeInput("strStatus", e.label);
+              handleChangeInput("search", "");
+            }}
+          />
         </div>
         <div className="col-sm-2"></div>
         <div className="col-sm-2">
-          <input className="form-control" placeholder="Search rocket name" />
+          <input
+            className="form-control"
+            placeholder="Search rocket name"
+            value={searchValue.search}
+            onChange={(e) => {
+              handleChangeInput("search", e.target.value);
+            }}
+          />
         </div>
       </div>
     </>

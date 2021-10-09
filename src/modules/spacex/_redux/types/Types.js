@@ -1,2 +1,4 @@
 export const SPACE_LOADING = "SPACE_LOADING";
 export const SPACE_LIST = "SPACE_LIST";
+export const SEARCH_AND_FILTER = "SEARCH_AND_FILTER";
+export const SPACE_FOR_FILTER = "SPACE_FOR_FILTER";

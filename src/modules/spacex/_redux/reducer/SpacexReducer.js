@@ -1,7 +1,14 @@
 import * as Types from "../types/Types";
 const initialState = {
   spaceList: [],
+  spaceFilter: [],
   isLoading: false,
+  searchValue: {
+    date: new Date(),
+    search: "",
+    bolStatus: "",
+    strStatus: "",
+  },
 };
 const SpacexReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -17,6 +24,20 @@ const SpacexReducer = (state = initialState, action) => {
         ...state,
         spaceList: action.payload,
       };
+    case Types.SPACE_FOR_FILTER:
+      return {
+        ...state,
+        spaceFilter: action.payload,
+      };
+    case Types.SEARCH_AND_FILTER:
+      const { name, value } = action.payload;
+      const searchValue = { ...state.searchValue };
+      searchValue[name] = value;
+      return {
+        ...state,
+        searchValue: searchValue,
+      };
+
     default:
       break;
   }
