@@ -1,11 +1,11 @@
 import React from "react";
 
+import SpacexHeader from "./SpacexHeader";
 const SpacexList = () => {
   return (
     <>
-      <div className="row">
-        <div className="col-sm-3"></div>
-        <h3>Spacex Information</h3>
+      <div className="container mt-3">
+        <SpacexHeader />
       </div>
     </>
   );
