@@ -37,30 +37,25 @@ export const StatusOptions = () => {
     { value: false, label: "Fail" },
   ];
 };
-export const FilterStatus = (search, list) => (dispatch) => {
+export const FilterStatus = (searchVal, list) => (dispatch) => {
   let arr = [];
 
   list.forEach((item) => {
-    if (search.strStatus.length > 0) {
-      if (item.launch_success === search.bolStatus) {
-        arr.push(item);
-      }
-    } else if (search.date.length === undefined) {
-      if (
-        moment(item.launch_date_local).format("dd-mm-yyyy") ===
-        moment(search.date).format("ddd-mm-yyyy")
-      ) {
-        arr.push(item);
-      }
-    } else {
-      if (
-        item.launch_success === item.bolStatus &&
-        moment(item.launch_date_local).format("ddd-mm-yyyy") ===
-          moment(search.date).format("ddd-mm-yyyy")
-      ) {
-        arr.push(item);
-      }
+    if (
+      searchVal.strStatus.length > 0 &&
+      item.launch_success === searchVal.bolStatus
+    ) {
+      arr.push(item);
     }
   });
   dispatch({ type: Types.SPACE_LIST, payload: arr });
+};
+export const makeSearch = (data) => {
+  let back = null;
+  if (data) {
+    back = "true";
+  } else {
+    back = "false";
+  }
+  return back;
 };

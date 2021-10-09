@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { FilterStatus, GetSpacexData } from "../_redux/action/SpacexAction";
+import {
+  FilterStatus,
+  GetSpacexData,
+  makeSearch,
+} from "../_redux/action/SpacexAction";
 import SpacexHeader from "./SpacexHeader";
 import moment from "moment";
 const SpacexList = () => {
@@ -14,10 +18,7 @@ const SpacexList = () => {
     dispatch(GetSpacexData());
   }, []);
   useEffect(() => {
-    if (
-      searchValue.date.length === undefined ||
-      searchValue.strStatus.length > 0
-    ) {
+    if (searchValue.strStatus.length > 0) {
       dispatch(FilterStatus(searchValue, spaceFilter));
     }
   }, [searchValue]);
@@ -52,11 +53,7 @@ const SpacexList = () => {
             <div className="row mb-5 pb-3">
               {spaceList
                 .filter((val) => {
-                  if (
-                    searchValue.search == "" &&
-                    searchValue.strStatus === "" &&
-                    searchValue.date === new Date()
-                  ) {
+                  if (searchValue.search == "" && searchValue.strStatus) {
                     return val;
                   } else if (
                     val.rocket.rocket_name
